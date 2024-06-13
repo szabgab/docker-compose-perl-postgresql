@@ -1,0 +1,23 @@
+services:
+  client:
+    build: .
+    volumes:
+    - .:/opt
+    links:
+    - pg-db-server
+    entrypoint: tail -f /dev/null
+    environment:
+        PGPASSWORD: secret
+  pg-db-server:
+    image: postgres:latest
+    environment:
+        POSTGRES_USER: username
+        POSTGRES_PASSWORD: secret
+        POSTGRES_DB: mydb
+    volumes:
+      - postgres-database-data:/var/lib/postgresql/data/
+
+volumes:
+  postgres-database-data:
+
+
